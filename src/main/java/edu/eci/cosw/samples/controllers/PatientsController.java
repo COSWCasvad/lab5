@@ -19,6 +19,7 @@ package edu.eci.cosw.samples.controllers;
 import edu.eci.cosw.jpa.sample.model.Paciente;
 import edu.eci.cosw.samples.services.PatientServices;
 import edu.eci.cosw.samples.services.ServicesException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PatientsController {
     
     
+    
     @Autowired
     PatientServices services;
     
@@ -54,6 +56,32 @@ public class PatientsController {
             else{
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+            
+        } catch (ServicesException ex) {
+            Logger.getLogger(PatientsController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);            
+        }         
+        
+    }
+    /*
+    @RequestMapping(path = "/topPatients/{num}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Paciente> getTopPacientes(@PathVariable int num) {
+        try {
+            return new ResponseEntity<>(services.topPatients(num),);
+            
+        } catch (ServicesException ex) {
+            Logger.getLogger(PatientsController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);            
+        }         
+        
+    }*/
+    
+    @RequestMapping(path = "/top10Patients",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Paciente>> getTop10Pacientes() {
+        try {
+            return new ResponseEntity<>(services.topPatients(10),HttpStatus.ACCEPTED);
             
         } catch (ServicesException ex) {
             Logger.getLogger(PatientsController.class.getName()).log(Level.SEVERE, null, ex);

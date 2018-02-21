@@ -2,6 +2,7 @@ package edu.eci.cosw.jpa.sample.model;
 
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "PACIENTES")
+@JsonSerialize
 public class Paciente  implements java.io.Serializable {
 
 
