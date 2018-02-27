@@ -24,7 +24,8 @@ public class PatientServiceImpl implements PatientServices{
     
     @Override
     public Paciente getPatient(int id, String tipoid) throws ServicesException {
-        return pr.getOne(new PacienteId(id, tipoid));
+        if(!pr.exists(new PacienteId(id, tipoid))) throw new ServicesException("The user doen't exist");
+        return pr.findOne(new PacienteId(id, tipoid));
     }
 
     @Override
